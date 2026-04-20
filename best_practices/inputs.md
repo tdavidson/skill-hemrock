@@ -1,0 +1,1 @@
+# Best practices — Input Discipline
