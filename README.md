@@ -44,6 +44,7 @@ git pull
 - `ecommerce` — Ecommerce Forecasting Tool
 - `unit_economics` — Unit Economics Tool
 - `fund_economics` — Fund Economics Tool
+- `fund_economics_tool_web` — Venture Capital Model — Web (Fund Economics Tool — Web)
 - `venture_valuation` — Venture Valuation Tool
 - `venture_fund_quarterly` — Venture Capital Model — Quarterly Forecast
 
