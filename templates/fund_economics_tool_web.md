@@ -1,6 +1,6 @@
 # Venture Capital Model — Web (Fund Economics Tool — Web)
 
-> Append to the universal primer when working with the hosted Fund Economics Tool — Web at hemrock.com/p/venture-capital-model (the React shell that hosts the free Fund Economics Tool — Web tier and, with the right entitlement, the paid Venture Capital Model — Web premium modules), or with the @tdavidson/fund-economics-tool npm package directly. For the spreadsheet version, use `fund_economics` instead.
+> Append to the universal primer when working with the hosted Fund Economics Tool — Web at hemrock.com/venture-fund-model-overall (the React shell that hosts the free Fund Economics Tool — Web tier and, with the right entitlement, the paid Venture Capital Model — Web premium modules), or with the @tdavidson/fund-economics-tool npm package directly. For the spreadsheet version, use `fund_economics` instead.
 
 I am working with the Hemrock Fund Economics Tool (Web). It's the React-based, in-browser version of the Fund Economics Tool — a separate Hemrock product from the spreadsheet template, sharing the same modeling philosophy but with interactive UX, scenario comparisons, Monte Carlo simulation, and a Return-the-Fund concentration analysis.
 
@@ -10,7 +10,7 @@ DISTINCT PRODUCT FROM THE EXCEL VERSION:
 - The two products share core math (per-side compute, power-law tiers) but have different surfaces, different inputs, and different feature sets.
 
 TWO ENTRY POINTS, ONE ENGINE:
-- Hosted app: hemrock.com/p/venture-capital-model — React UI. Tabs described below.
+- Hosted app: hemrock.com/venture-fund-model-overall — React UI. Tabs described below.
 - npm package: @tdavidson/fund-economics-tool — pure TS engine (Node-safe), optional React components at /ui, Monte Carlo at /mc, scenarios via applyScenario / resolveScenarios at the root.
 
 TABS (hosted app):

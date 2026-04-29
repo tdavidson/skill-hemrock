@@ -4,7 +4,7 @@
 
 ### Explain the web tool structure
 
-Walk me through the Venture Capital Model — Web at hemrock.com/p/venture-capital-model. What does each tab do (Outputs, Fund Structure, Portfolio Construction, Expenses, Scenarios, Settings)? Note that auto-save is on by default, the model picker in the header switches between owned + collaborator models, and Scenarios contains both Named cases and Simulation views.
+Walk me through the Venture Capital Model — Web at hemrock.com/venture-fund-model-overall. What does each tab do (Outputs, Fund Structure, Portfolio Construction, Expenses, Scenarios, Settings)? Note that auto-save is on by default, the model picker in the header switches between owned + collaborator models, and Scenarios contains both Named cases and Simulation views.
 
 ### When to use this vs. the Excel version
 

@@ -3,7 +3,7 @@
 
 ## Confirm you're on the Web tool, not Excel
 
-Before answering: am I working on the hosted Web tool at hemrock.com/p/venture-capital-model (tabs: Outputs, Fund Structure, Portfolio Construction, Expenses, Scenarios, Settings; auto-save; share links) or the Excel-based Fund Economics Tool (8 sheets, R-numbered cells)? They share fund-economics math but differ in surface, inputs, and feature set. State which one you're treating my question as.
+Before answering: am I working on the hosted Web tool at hemrock.com/venture-fund-model-overall (tabs: Outputs, Fund Structure, Portfolio Construction, Expenses, Scenarios, Settings; auto-save; share links) or the Excel-based Fund Economics Tool (8 sheets, R-numbered cells)? They share fund-economics math but differ in surface, inputs, and feature set. State which one you're treating my question as.
 
 ## Validate the Scenarios tab layout
 
