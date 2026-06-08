@@ -20,3 +20,7 @@ Run the exit waterfall at three different exit valuations: [low], [mid], and [hi
 ## Flag structural errors from AI-generated cap tables
 
 I received a cap table or share count calculation from an AI tool. Before I use these numbers, audit them against the Hemrock Cap Table model. Specifically check: (1) is the price per share denominator correct, (2) are pre-money and post-money SAFEs treated differently, (3) does total ownership sum to 100%, and (4) does the option pool treatment match what was agreed.
+
+## Check unconverted SAFE/note seniority in the exit waterfall
+
+If the model has unconverted SAFEs or notes at exit, confirm each one's seniority in the distribution. A convertible NOTE is indebtedness: its cash-out is paid off the top, before any equity, senior to SAFEs. A SAFE that takes its cash-out (return of purchase amount) is junior to debt and notes and ranks inside the equity preference stack with the same priority as standard non-participating preferred; by default pari passu with the most recent equity round, but it can be set senior to preferred or placed at a specific rank because SAFEs vary. Show me where each convertible sits in the seniority order and confirm it matches the instrument's actual terms.
