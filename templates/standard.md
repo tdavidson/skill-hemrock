@@ -88,12 +88,12 @@ CRITICAL RULES:
 <!-- HEMROCK_SHEET_MAP_START -->
 ## Sheet Reference (auto-generated, do not edit by hand — see _models/)
 
-# Standard Financial Model — Sheet Map
+# Standard Financial Model Sheet Map
 
 ## Sheets (19)
 README, License, Disclaimer, Get Started, Summary, Snapshot, Key Metrics, Key Reports, Revenues, Forecast, Hiring Plan, Statements, Sources & Uses, Unit Economics, Budget, Breakdown, Model Comparison, Glossary, Changelog
 
-## Get Started Sheet (B1:G154) — CORE INPUT SHEET
+## Get Started Sheet (B1:G154): Core Input Sheet
 
 ### Model Structure (R6-R14)
 | Row | Label | Type | Default |
@@ -105,7 +105,7 @@ README, License, Disclaimer, Get Started, Summary, Snapshot, Key Metrics, Key Re
 | R13/D13 | Fiscal year end | FORMULA | Dec 2026 |
 | R14/D14 | Relative/absolute dates | DROPDOWN | "absolute" |
 
-### Revenue Assumptions (R17-R58) — THE KEY SECTION
+### Revenue Assumptions (R17-R58): The Key Section
 | Row | Label | Type | Default |
 |-----|-------|------|---------|
 | R20/D20 | Growth metric name | INPUT | "Growth Units" |
@@ -174,7 +174,7 @@ R131-R142: Monthly % change inputs (Jan-Dec), R143 = sum check
 ### Model Checks (R146-R153)
 All FORMULA returning yes/no
 
-## Revenues Sheet (B1:CU1174) — REVENUE ENGINE
+## Revenues Sheet (B1:CU1174): Revenue Engine
 
 ### Structure
 Duplicated for Segment 1 and Segment 2. Contains:
@@ -198,7 +198,7 @@ Duplicated for Segment 1 and Segment 2. Contains:
 - Revenue recognition calculations
 - MRR build calculations
 
-## Forecast Sheet (B1:CU689) — FORECAST ENGINE
+## Forecast Sheet (B1:CU689): Forecast Engine
 
 ### Driver System (per row, columns K-X)
 | Column | Purpose |
@@ -246,19 +246,64 @@ Duplicated for Segment 1 and Segment 2. Contains:
 - Category dropdown: R&D, Sales, G&A, Misc SG&A
 - Segment dropdown: Unallocated, Segment 1, Segment 2
 
-## Statements Sheet — All FORMULA
-- R11-R40: Income Statement
-- R43-R88: Balance Sheet
-- R90-R121: Cash Flow Statement
+## Statements Sheet: all FORMULA
+
+Three monthly GAAP statements stacked on one sheet, built from the Actuals-plus-Forecast block on the Forecast sheet (R231-R294). Output only, nothing to edit here. Period headers (R4-R8) pull straight from the Forecast.
+
+### Income Statement (R11-R40)
+| Rows | Lines |
+|------|-------|
+| R13-R14 | Revenues, % Growth |
+| R16 | COGS |
+| R18-R19 | Gross Margin, Gross Margin % of Revenues |
+| R21-R22 | SG&A, % of Revenues |
+| R24-R25 | Operating Income (EBITDA), % of Revenues |
+| R27-R32 | Depreciation, Amortization, Interest Income, Interest Expense, Other Income, Other Expense |
+| R34 | Earnings before Taxes (EBT) |
+| R36 | Taxes |
+| R38-R40 | Net Income (Loss), Cumulative Net Income, % of Revenues |
+
+### Balance Sheet (R43-R88)
+| Section | Rows | Lines |
+|---------|------|-------|
+| Assets | R45-R59 | Cash, Accounts Receivable, Inventory, Prepaid Expense, Other Current Assets, Total Current Assets; PP&E, Accumulated Depreciation, Total Fixed Assets; Other Assets, Accumulated Amortization; Total Assets |
+| Current Liabilities | R61-R70 | Accounts Payable, Inventory AP, Deferred Revenue Liability, Accrued Liabilities, Corporate Tax Payable, VAT Payable, Working Capital Loan Facility, Total Current Liabilities |
+| Noncurrent Liabilities | R72-R77 | Convertible Notes and SAFEs, Debt Financing, Accrued Interest, Total Noncurrent Liabilities |
+| Stockholders Equity | R79-R85 | Owners Equity, Equity Investment, SAFE Investment, Retained Earnings, Net Income (Loss), Total Stockholders Equity |
+| Check | R87-R88 | Total Liabilities and Shareholder's Equity, and a balance Check row |
+
+### Statement of Cash Flows (R91-R120)
+| Section | Rows | Lines |
+|---------|------|-------|
+| Operations | R93-R100 | Cash beginning of period; Net Income, add back Depreciation, Amortization, Changes in Working Capital; Net Cash Flow from Operations |
+| Investing | R102-R105 | CAPEX, Other Assets, Net Cash Flow from Investing |
+| Financing | R107-R116 | Change in Equity / SAFE / Convertible Debt investments, New Debt Financing, Changes in Owners Equity, Dividends and Distributions, Debt Repayment, Draw (Repayment) on Working Capital Line, Net Cash Flow from Financing |
+| Reconciliation | R118-R120 | Net Cash Flow, Cash End of Period |
 
 ## Other Sheets (all FORMULA)
-- Summary: Annual rollup (5 years)
-- Snapshot: 6-month forward cash flow
-- Key Metrics: SaaS KPIs (ARR, Magic Number, Rule of 40, LTV:CAC)
-- Unit Economics: Per-unit LTV, CAC, payback
-- Budget: Forecast vs Actuals variance
-- Breakdown: Segment-level P&L
-- Sources & Uses: Funding deployment summary
+
+All output sheets, built from Forecast and Statements. Nothing to edit; useful as ready-made views.
+
+### Summary
+Annual rollup (5 years), built from the Forecast via SUMIFS by fiscal year. A condensed income statement (Revenues with Y/Y growth and growth multiple, COGS, Gross Margin, SG&A with the four SG&A category lines, EBITDA, D&A, Interest, Other, Taxes, Net Income, each with % of revenue), then an annual Statement of Cash Flows (operations / investing / financing rolling to cash end of period), then an annual Balance Sheet.
+
+### Snapshot
+A single-period cash view (R2-R24): cash beginning of period, then Revenues, gross margin, other income and expenses, corporate taxes, changes in working capital, net cash flows from investing and financing, ending at cash end of period. The "As of" period (R4) is selectable.
+
+### Key Metrics (R2-R34)
+SaaS KPIs by year. ARR build (beginning, new ARR, expansion ARR, churn, contraction, ending ARR, Y/Y growth), Net New ARR, ARR per head, SaaS Magic Number, Rule of 40, then acquisition economics: average revenue and gross margin per unit, CAC (paid-only and blended), CAC payback months, CAC Ratio, LTV:CAC, and Customer Lifetime Value (pulled from the Unit Economics sheet).
+
+### Unit Economics (R2-R138)
+Per-unit LTV, CAC, and payback, driven from the Get Started revenue and churn inputs. Inputs block (revenues, cost of sales, discounts, churn and growth, discount rate, acquisition and retention costs) feeds the headline LTV by type (recurring, one-time, transaction), total LTV, LTV/CAC, and CAC payback (R49-R54). Below that, a month-by-month per-unit cash flow detail (R56-R138) builds the LTV: revenues, cost of sales, discounts, billings, acquisition and retention costs net of churn, then cumulative discounted gross margin and the % of LTV realized over time.
+
+### Budget (R2-R46)
+Budget versus Actuals variance for a selectable period (start and end month at R5-R6). Same P&L shape as the income statement, with a Budget column (from the Forecast block) and an Actuals column (from the Actuals block) side by side, down to Net Income.
+
+### Breakdown (R2-R50)
+Segment-level P&L for a selectable year (R2). Full income statement (Revenues through Net Income) split by segment, with % of revenue and % of total columns, using SUMPRODUCT against the segment tag on the Forecast input rows.
+
+### Sources & Uses (R2-R27)
+Funding deployment over a selectable month range (R5-R6). Sources (external funding, revenues) and Uses (the SG&A and expense categories from the Forecast, plus working capital as the balancing item), each shown in dollars and as a percent of the total.
 
 ## Cross-Sheet References
 ```

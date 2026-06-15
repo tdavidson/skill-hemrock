@@ -66,7 +66,7 @@ CRITICAL RULES:
 <!-- HEMROCK_SHEET_MAP_START -->
 ## Sheet Reference (auto-generated, do not edit by hand — see _models/)
 
-# Venture Capital Model, Quarterly Forecast — Sheet Map
+# Venture Capital Model, Quarterly Forecast Sheet Map
 
 ## Sheets (15)
 README, License, Get Started, Get Started 2, Forecast 2, Get Started 3, Forecast 3, Scenarios, Key Reports, Forecast, Management Company, Resources, Model Comparison, Glossary, Changelog
@@ -74,7 +74,7 @@ README, License, Get Started, Get Started 2, Forecast 2, Get Started 3, Forecast
 ## Structure
 Three scenarios (base + 2 alternates), each with their own Get Started + Forecast pair. The base scenario uses "Get Started" + "Forecast"; scenarios 2 and 3 use "Get Started 2"/"Forecast 2" and "Get Started 3"/"Forecast 3". The Scenarios sheet compares all three side-by-side.
 
-## Get Started — Core Inputs
+## Get Started: Core Inputs
 
 ### Capital and Fund Assumptions (R5–R18)
 All time periods are in **quarters**, not years.
@@ -164,7 +164,7 @@ Mirror of First Follow-on rows above, with defaults: $1.08M check, $60M postmone
 | R102/E102–F102 | # of Checks | FORMULA | calculated |
 
 ### Return Assumptions (R105–R112)
-Four exit outcomes — % of investments by outcome.
+Four exit outcomes, by % of investments per outcome.
 
 | Row | Label | Default |
 |-----|-------|---------|
@@ -173,7 +173,7 @@ Four exit outcomes — % of investments by outcome.
 | R111 | Medium | 10% |
 | R112 | High | 10% |
 
-### Fund Performance (R115–R131) — FORMULA
+### Fund Performance (R115–R131): all FORMULA
 Headline metrics that summarize the model output.
 
 | Row | Metric |
@@ -192,41 +192,81 @@ Headline metrics that summarize the model output.
 | R130 | Net IRR |
 | R131 | Max Exposure, as % of Committed Capital |
 
-## Forecast — Quarterly Cash Flows
-Quarterly time-series across the fund's life (40+ quarters). Columns are the time periods; rows are the cash-flow components.
+## Forecast: Quarterly Cash Flows
 
-Pulled entirely from Get Started inputs:
-- Capital Calls per quarter
-- Management Fees per quarter
-- Fund Expenses per quarter
-- Investments per quarter (paced over the active investment period)
-- Exits per quarter (driven by hold-period assumptions and exit outcomes)
-- Distributions per quarter
-- NAV per quarter
-- Cumulative metrics: PIC, DPI, RVPI, TVPI, IRR (the J-curve)
+Where the Get Started assumptions become a quarter-by-quarter cash flow across the life of the fund. Same engine as the flagship Venture Capital Model. Almost everything flows automatically; a few cells on this sheet are editable.
 
-## Get Started 2 / Forecast 2, Get Started 3 / Forecast 3
-Independent copies of Get Started + Forecast for scenarios 2 and 3. Each scenario can have completely different fund size, strategy, return outcomes, etc.
+**Layout.** Column B is the line label, column C holds notes and a few optional overrides, column D is the aggregation method (sum / final / initial / max), column E is the all-period total, and the quarters run left to right across columns G onward, one column per quarter.
 
-## Scenarios Sheet
-Side-by-side comparison of all 3 scenarios:
-- Gross / Net Multiple and IRR for each
-- Sensitivity inputs that drive scenarios 2 and 3
+### Triggers (R7-R11)
+On/off flags per quarter, derived from the Get Started time periods, that switch fund activities on and off as the fund ages: new investment period (R8), management fees period (R9), fund operations period (R10), proceeds recycling period (R11). Normally left alone.
+
+### Inputs (R13-R21)
+The editable assumptions that live on the Forecast itself: Management Fees basis (R14, charge on committed or called capital), the three GP-commit treatment toggles (excluded from LP capital R16, excluded from management fees R17, covered via cashless contributions R18), Committed Capital % called per year (R19), and optional manual overrides for the Called Capital and Invested Capital pacing (R20-R21).
+
+### Capital roll-forward (R23-R29)
+The quarterly cash bridge: capital beginning of period (R23), plus called capital (R24), plus proceeds (R25), less distributions and carried interest (R26), less fees (R27), less investments (R28), equals capital end of period (R29).
+
+### Detailed cash flows (R31-R60)
+Each is a quarterly series:
+
+| Rows | Lines |
+|------|-------|
+| R31-R32 | Committed Capital, Called Capital |
+| R33 | Manual Investments (type a check into a specific quarter to override the paced schedule) |
+| R34-R37 | New Investments, Prorata Opportunities, Reserves for Follow-on, Follow-on Investments |
+| R38-R39 | Total Investments by cohort, Total Investments |
+| R40-R42 | Organizational Expenses, Operational Expenses, Management Fees |
+| R43-R44 | Recycled Capital, Proceeds |
+| R45-R47 | Preferred Return, GP Catchup, Carried Interest (the waterfall, quarter by quarter) |
+| R48 | Distributions |
+| R49-R54 | Writeoffs, Invested Capital Exited, Change in Invested Capital, Change in Unrealized Gain (Loss), Change in Residual Value, Change in Undrawn Capital Commitments |
+| R55-R59 | The LP and GP splits: Committed and Called Capital from LPs, change in invested capital from LPs, Distributions to LPs, Distributions to GPs |
+| R60 | New Investments (number of companies) |
+
+### Cumulative versions (R61-R90)
+Each flow above repeated as a running cumulative total, so you can read the fund's position at any point rather than just the activity in one quarter.
+
+### Multiples and exposure (R92-R96)
+PIC (R92), RVPI (R93), DVPI (R94), TVPI (R95), and Exposure as a percent of total committed capital (R96).
+
+### Performance (R98-R106)
+Realized-only return lines: Net (Investments) Proceeds and cumulative (R98-R99), Gross Multiple and Gross IRR (R100-R101), Net (Called Capital) Distributions and cumulative (R102-R103), Net Multiple and Net IRR (R104-R105), and Interim Net IRR including unrealized value (R106).
+
+### IRR build grid (R107 onward)
+One row per quarter, each building the dated cash-flow vector that feeds the IRR formulas. This produces the J-curve.
+
+## Scenarios: side-by-side comparison and sensitivity
+
+The model carries three full scenarios. The base case is the main Get Started and Forecast pair. Scenarios 2 and 3 have their own complete pairs ("Get Started 2" with "Forecast 2", "Get Started 3" with "Forecast 3"). The Scenarios sheet is the dashboard and the place you drive the two alternates from.
+
+### What the Scenarios sheet shows (B2:N32)
+Three columns: Conservative Case (Scenario 2), Base Case (Scenario 1), High Case (Scenario 3).
+
+| Rows | Content |
+|------|---------|
+| R23-R26 | Gross Multiple, Net Multiple, Gross IRR, Net IRR for each scenario, pulled from each scenario's Get Started (E127-E130) |
+| R28 | % Change in # of High Exits (default -50% conservative, +100% high) |
+| R29 | % Change in Valuations of High Exits (default -25% conservative, +25% high) |
+| R31-R32 | Notes on what each sensitivity input changes |
+
+### How the alternates are driven
+Get Started 2 and Get Started 3 reference the base Get Started for most assumptions, then apply the two sensitivity inputs from the Scenarios sheet to perturb the count and valuation of high exits. Tune two numbers per alternate and the rest follows the base, or overwrite any cell directly on a scenario's Get Started sheet to make it fully independent (different fund size, strategy, or return outcomes).
 
 ## Key Reports
 Pre-built summary views and charts pulling from the base scenario.
 
 ## Management Company
-Separate P&L for the management company entity:
-- Management fee revenue
-- Operating expenses
-- GP commit obligations
-- Carry income projections
+A separate entity model, distinct from the fund:
+- **Revenues** (R7-R10): Management Fees, plus a spare line, totaled
+- **Expenses** (R12-R27): Salary, Contractors, Travel, Marketing, Software, Annual LLC filings, Insurance, several Taxes lines, and spare rows, totaled
+- **Management Company Cash** (R29-R34): cash beginning of period, revenues, expenses, external funding placeholder, cash end of period
+- **GP Carried Interest Entity** (R36-R38): Carried Interest and its disbursements (assumed immediate)
 
 ## Key differences from the flagship Venture Capital Model
 - **Exit Outcome structure** (Fail/Low/Medium/High) rather than the flagship's multi-stage graduation chain (Seed → Series A → … → Series F+)
 - **Up to two follow-on rounds** modeled explicitly (First Follow + Second Follow), with everything beyond folded into "Additional Dilution"
 - **3 full scenario copies** (Get Started 2/3 + Forecast 2/3), independent assumptions
-- **No Statements sheet** — the flagship has full fund-level Statement of Operations / Balance Sheet / Cash Flows; the quarterly does not
+- **No Statements sheet**: the flagship has full fund-level Statement of Operations / Balance Sheet / Cash Flows; the quarterly does not
 - **Time periods in quarters** throughout (Active Investment, Fund Duration, Operations, Extension)
 <!-- HEMROCK_SHEET_MAP_END -->

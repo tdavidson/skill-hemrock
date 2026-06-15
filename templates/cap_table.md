@@ -44,7 +44,7 @@ CRITICAL RULES:
 <!-- HEMROCK_SHEET_MAP_START -->
 ## Sheet Reference (auto-generated, do not edit by hand — see _models/)
 
-# Cap Table and Exit Waterfall Tool — Sheet Map
+# Cap Table and Exit Waterfall Tool Sheet Map
 
 ## Sheets
 README, License, Cap Table, Exit Waterfall, Exit Waterfall (with Convertibles), Cap Table (with Anti Dilution), Cap Table (Issuing Equity), Cap Table (Issuing Options), Cap Table (Converting SAFEs and Notes), Resources, Glossary, Changelog
@@ -52,81 +52,79 @@ README, License, Cap Table, Exit Waterfall, Exit Waterfall (with Convertibles), 
 ## Cap Table Sheet
 
 ### Structure
-- Pre-financing cap table (cols B-H) | Proforma cap table (cols J onward)
-- Each round is a column block that can be copy-pasted to the right to add rounds
+Two side-by-side blocks: the pre-financing cap table (cols B-I) and the proforma cap table for the new round (cols K-V). Each round is a column-block you copy-paste to the right to add the next round. The share-class rows (rows 9-34) are shared by both blocks.
 
-### Row Map
-- R5: Section header — "Pre-financing cap table" | "Proforma cap table"
-- R7-R8: Column headers — Shareholder, Common Shares, Preferred Shares, Options, Issued and Outstanding, % I&O, Fully Diluted, % FD | Investment, Actual Investment, Preferred Issued (conversion), Preferred Issued (new), Options Authorized, Common Transferred, Preferred Transferred, Options Issued/Cancelled, Common, Preferred, Options
-- R9: "Common" section header
-- R10-R14: Shareholder rows (INPUT: names in col A, share counts in col B)
-  - Default: R10 = "Shareholder" with 10,000,000 common shares
-- R16: "Options and RSUs" section header
-- R17: Options issued and outstanding (FORMULA)
-- R18: Shares available for issuance (FORMULA)
-- R19: Option pool (INPUT)
-- R21: "Preferred" section header
-- R22-R26: Preferred shareholder rows (INPUT)
-- R28: "Convertible Notes and SAFEs" section header
-- R29-R33: Convertible rows (INPUT: investment amount, cap, discount, type)
-- R35: Totals section
-- R36: Total shares (FORMULA)
-- R38: "Round Details" section header
-- R39: Pre-money valuation (INPUT)
-- R40: Investment amount (INPUT)
-- R41: Post-money valuation (FORMULA)
-- R42: Price per share (FORMULA)
-- R43-R48: Additional round mechanics
+Shared columns B-I: Shareholder (B), Common Shares (C), Preferred Shares (D), Options (E), Issued and Outstanding (F), % I&O (G), Fully Diluted Shares (H), % Fully Diluted (I).
 
-### Key Input Cells (per round block)
-- Shareholder names: col A, R10-R14, R22-R26
-- Share counts: col B (common), col C (preferred), col D (options)
-- Convertible details: investment, cap, discount, type (pre/post money SAFE, note)
-- Pre-money valuation: R39
-- Investment amount: R40
-- Option pool: R19
+### Share-class rows (the left block)
+- **R9 Common** header; R10-R14 common shareholder rows (INPUT: name in col B, shares in col C; default R10 = 10,000,000 common)
+- **R16 Options and RSUs** header; R17 issued and outstanding, R18 shares available for issuance, R19 new shares reserved (the option pool)
+- **R21 Equity Investors (from Convertibles)** header; R22-R25 converted SAFE/note rows (FORMULA, pulled from the conversion block)
+- **R27 Equity Investors** header; R28-R32 new-round investor rows (INPUT)
+- **R34 Total**
+
+### Proforma columns (the new round, cols K-V)
+What the round does to each row: Investment (K, INPUT), Actual Investment after share rounding (L), Preferred Shares Issued from conversion (M), Preferred Shares Issued from new investment (N), Options Authorized from new options (O), Common / Preferred / Options Transferred or cancelled (P-R, optional), then the resulting Common / Preferred / Options / I&O (S-V).
+
+### Round Details (col M, rows 36-41)
+Total Investment (M37, sum of the round), Premoney Valuation (M38, INPUT assumption, default $10M), Postmoney Valuation (M39, FORMULA), Company Capitalization (M40, the ownership denominator), Price per Share (M41, FORMULA), with the share-rounding method and option-pool target nearby.
+
+### Key Input Cells
+- Existing shares: cols C/D/E on the share-class rows
+- New investment amount: col K on the investor rows (R28-R32)
+- Premoney valuation: M38
+- Option pool: R19 and the option-pool target in the round details
+- Convertible terms (cap, discount, type) on the conversion block
 
 ### Formulas to Never Touch
-- Price per share (R42)
-- Post-money valuation (R41)
-- Fully diluted share counts (col G)
-- Ownership percentages (cols F, H)
-- Conversion calculations for SAFEs and notes
+- Price per share (M41), Postmoney valuation (M39), Company Capitalization (M40)
+- Fully diluted counts (col H), ownership percentages (cols G, I)
+- The resulting proforma columns (S-V)
+- SAFE and note conversion calculations
 
 ## Exit Waterfall Sheet
 
 ### Structure
-- Exit valuation scenarios across columns
-- Distribution flows top to bottom: preferences first, then participation, then common
+One row per share class, one column per exit-price breakpoint. The model runs proceeds down the preference stack and out to common, at a series of increasing exit values.
 
-### Row Map
-- R2: Sheet title
-- R5-R6: Exit valuation input row (INPUT: enter different exit values)
-- R8: "Liquidation Preferences" section
-- R9-R13: Per-investor preference amounts and multiples (INPUT: preference multiple, participation cap)
-- R15: Total preferences (FORMULA)
-- R17: "Proceeds Distribution" section
-- R18-R30: Distribution waterfall — seniority/pari passu, preference payouts, remaining to common
-- R32: Total distributed (FORMULA — should equal exit valuation)
-- R34: "Per Share" section — proceeds per share by class
+### Share classes (R23-R37)
+Series J down to Seed (preferred), then Common (R34), two Options rows (R35-R36), and Warrants (R37). Inputs per class, across the columns:
+
+| Col | Field | Type |
+|-----|-------|------|
+| D | Type (Preferred / Common / Options / Warrants) | DROPDOWN |
+| E | Seniority (drives the preference-stack order) | INPUT |
+| F | Amount Invested | INPUT |
+| G | Shares | FORMULA (invested ÷ price; direct INPUT for common/options) |
+| H | Conversion Ratio, preferred to common | INPUT (default 1.0) |
+| J | Price per Share, or strike price for options/warrants | INPUT |
+| L | Liquidity Pref Multiple (multiple of amount invested) | INPUT (default 1.0) |
+| M | Liquidity Preferences (= F × L, plus dividends) | FORMULA |
+| O | Preferred Participation Rights (non-participating / participating / capped) | DROPDOWN |
+
+R39 is Total shares.
+
+### Distributions to Equity (R41-R47)
+R42 Exit Price is a row of breakpoints across cols D-J, auto-built from the preference stack so each step adds the next preference layer; override any cell to set a specific exit value. Then Repayment of Debt (R43), Repayment of Convertibles (R44), Proceeds from Options (R45), Distributions to Equity (R46), and Breakpoint # (R47).
+
+### Liquidation Preferences by seniority (R49 onward)
+One row per class, in seniority order (col E drives it), each column computing that class's preference payout at that exit price. Below this the waterfall continues with the conversion decision per class (convert to common versus take the preference), participation, distributions to common, and finally proceeds per share by class.
 
 ### Key Input Cells
-- Exit valuations: R5-R6 across columns
-- Liquidation preference multiples: per investor
-- Participation: participating/non-participating, caps
-- Seniority: senior/pari passu ordering
+Per class: Amount Invested (F), Price per Share (J), Conversion Ratio (H), Liquidity Pref Multiple (L), Participation Rights (O), and Seniority (E). Exit prices on R42, or let them auto-build.
 
-## Exit Waterfall with Convertibles Sheet
-Same structure as Exit Waterfall but includes unconverted SAFEs and notes in the distribution.
+### What it can and cannot do
+From the sheet's own notes (R5-R19): it handles many preferred classes, participating and non-participating preferred, different preference multiples, a multi-class preference stack, share-class sub-classes, cashless warrants, options at different strikes, preferred dividends, and preferred-to-common conversion ratios. It does not test for unconverted convertibles paying out as debt; use the convertibles version below for that.
 
-## Cap Table with Anti Dilution Sheet
-Same as Cap Table but adds:
-- Anti-dilution protection type per investor (full ratchet, broad-based weighted average, narrow-based)
-- Anti-dilution trigger calculations when a down round occurs
-- Adjusted conversion prices and additional shares issued
+## Exit Waterfall, with Convertibles Sheet
+Same layout as the Exit Waterfall, with one addition: it calculates proceeds to unconverted SAFEs and notes (item 11 on the can-do list). Use this when convertibles might not convert before the exit.
+
+## Cap Table, with Anti Dilution Sheet
+The Cap Table sheet plus a Warrants line (R20) and anti-dilution mechanics: protection type per investor (full ratchet, broad-based or narrow-based weighted average), the trigger calculation when a down round occurs, the adjusted conversion price, and the additional shares issued as a result.
 
 ## Instructional Sheets
-- Cap Table, Issuing Equity: isolated example of adding an equity round
-- Cap Table, Issuing Options: isolated example of option grants
-- Cap Table, Converting SAFEs and Notes: isolated example of conversion mechanics
+Stripped-down single-purpose examples, each showing one mechanic in isolation:
+- **Cap Table, Issuing Equity** (R2-R23): common plus new equity investors only, no options or convertibles. A priced round at its simplest.
+- **Cap Table, Issuing Options** (R2-R28): common, an Options and RSUs block, and equity investors. Option grants and pool mechanics.
+- **Cap Table, Converting SAFEs and Notes** (R2-R29): common, equity investors from convertibles, and new equity investors. Conversion mechanics on their own.
 <!-- HEMROCK_SHEET_MAP_END -->

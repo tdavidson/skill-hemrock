@@ -61,7 +61,7 @@ CRITICAL RULES:
 <!-- HEMROCK_SHEET_MAP_START -->
 ## Sheet Reference (auto-generated, do not edit by hand — see _models/)
 
-# SaaS Forecasting Tool — Sheet Map
+# SaaS Forecasting Tool Sheet Map
 
 ## Sheets (8)
 README, License, Disclaimer, Get Started, Key Reports, Forecast, Enterprise SaaS, Changelog
@@ -88,9 +88,9 @@ README, License, Disclaimer, Get Started, Key Reports, Forecast, Enterprise SaaS
 | R26/D26 | Contract cycle months | INPUT (#) | 12 |
 | R27/D27 | Billing cycle months | INPUT (#) | 12 |
 
-## Forecast (B1:BO78) — Aggregate Mode
-### Timescale (R4-R12): Period, date, FY, quarter — all FORMULA
-### Assumptions (R15-R31): Mirror of Get Started inputs — FORMULA references
+## Forecast (B1:BO78): Aggregate Mode
+### Timescale (R4-R12): Period, date, FY, quarter, all FORMULA
+### Assumptions (R15-R31): Mirror of Get Started inputs (FORMULA references)
 ### Subscribers (R33-R43):
 - R34: Subscribers beginning of month (FORMULA)
 - R35: Not up for renewal (FORMULA)
@@ -110,9 +110,9 @@ README, License, Disclaimer, Get Started, Key Reports, Forecast, Enterprise SaaS
 ### MRR (R51-R58):
 - R52-R57: Beginning, Existing, New, Renewed, Churned, Reactivated MRR (all FORMULA)
 - R58: Ending MRR (FORMULA)
-### Outputs (R60+): Annual summaries, unit economics — FORMULA
+### Outputs (R60+): Annual summaries, unit economics (FORMULA)
 
-## Enterprise SaaS (B1:BT45) — Pipeline Mode
+## Enterprise SaaS (B1:BT45): Pipeline Mode
 ### Per-client rows (R17-R30, INPUT):
 | Column | Purpose |
 |--------|---------|
@@ -132,5 +132,5 @@ README, License, Disclaimer, Get Started, Key Reports, Forecast, Enterprise SaaS
 - R41-R44: Deferred Revenue schedule (FORMULA)
 
 ## Key difference from Standard Model
-No expenses, no financial statements, no balance sheet. Revenue-only tool. Two modes (Aggregate on Forecast, Pipeline on Enterprise SaaS) — use one at a time.
+No expenses, no financial statements, no balance sheet. Revenue-only tool. Two modes (Aggregate on Forecast, Pipeline on Enterprise SaaS). Use one at a time.
 <!-- HEMROCK_SHEET_MAP_END -->

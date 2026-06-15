@@ -51,7 +51,7 @@ CRITICAL RULES:
 <!-- HEMROCK_SHEET_MAP_START -->
 ## Sheet Reference (auto-generated, do not edit by hand — see _models/)
 
-# Runway Tool — Sheet Map
+# Runway Tool Sheet Map
 
 ## Sheets
 README, License, Disclaimer, Get Started, Summary, Key Reports, Forecast, Sources & Uses, Statements, Glossary, Changelog
@@ -97,7 +97,7 @@ README, License, Disclaimer, Get Started, Summary, Key Reports, Forecast, Source
 | R67 | Estimated impact (should = 0) | FORMULA | |
 
 ### Section: Model Checks (R70-R77)
-All FORMULA — returns yes/no:
+All formula cells that return yes/no:
 - R73: Balance sheet balances?
 - R74: Cash stays above zero?
 - R75: Deferred revenues positive?
@@ -140,12 +140,26 @@ All FORMULA — returns yes/no:
 | R55-R80 | Category aggregations | FORMULA | Subscribers, GTV, Bookings, Billings, Revenue by stream, SG&A by category, COGS, CAPEX, D&A, Interest, Other, Taxes |
 
 ## Statements Sheet
-All FORMULA. Monthly financial statements:
-- R10-R38: Income Statement (Revenue → COGS → Gross Margin → SG&A → EBITDA → D&A → Interest → EBT → Taxes → Net Income)
-- R41-R80: Balance Sheet (Assets, Liabilities, Equity)
-- R83+: Cash Flow Statement
+All FORMULA, three monthly statements built from the Forecast. Output only; nothing to edit. Period headers (R4-R7) pull from the Forecast.
+
+### Income Statement (R10-R38)
+Revenues with % Growth (R12-R13), COGS (R15), Gross Margin and Gross Margin % (R17-R18), SG&A and % of Revenues (R20-R21), Operating Income (EBITDA) and % (R23-R24), Depreciation and Amortization (R26-R27), Interest Expense (R28), Other Income and Expense (R29-R30), EBT (R32), Taxes (R34), Net Income and Cumulative Net Income (R36-R38).
+
+### Balance Sheet (R41-R86)
+| Section | Rows | Lines |
+|---------|------|-------|
+| Assets | R43-R57 | Cash, Accounts Receivable, Inventory, Prepaid Expense, Other Current Assets, Total Current Assets; PP&E, Accumulated Depreciation, Total Fixed Assets; Other Assets, Accumulated Amortization; Total Assets |
+| Current Liabilities | R59-R68 | Accounts Payable, Inventory AP, Deferred Revenue Liability, Accrued Liabilities, Corporate Tax Payable, VAT Payable, Working Capital Loan Facility, Total Current Liabilities |
+| Noncurrent Liabilities | R70-R75 | Convertible Notes and SAFEs, Debt Financing, Accrued Interest, Total Noncurrent Liabilities |
+| Stockholders Equity | R77-R83 | Owners Equity, Equity Investment, SAFE Investment, Retained Earnings, Net Income, Total Stockholders Equity |
+| Check | R85-R86 | Total Liabilities and Shareholder's Equity, and a balance Check |
+
+### Statement of Cash Flows (R89-R117)
+Cash beginning of period (R91); Operations (R93-R98): Net Income plus Depreciation, Amortization, Changes in Working Capital; Investing (R100-R103): CAPEX, Other Assets; Financing (R105-R113): changes in equity, SAFE, and convertible debt investments, new debt financing, changes in owners equity, debt repayment, working capital line draw; then Net Cash Flow (R115) and Cash End of Period (R117).
 
 ## Summary Sheet
-All FORMULA. Annual rollup (3 years):
-- Income Statement, Cash Flows, Balance Sheet
+All FORMULA. Annual rollup built from the Statements via SUMIFS by fiscal year. A condensed income statement (Revenues with Y/Y growth and growth multiple, COGS, Gross Margin, SG&A, EBITDA, D&A, Interest, Other, Taxes, Net Income, each with % of revenue), an annual Statement of Cash Flows (operations / investing / financing to cash end of period), and an annual Balance Sheet (Assets, Liabilities, Shareholder's Equity).
+
+## Sources & Uses Sheet
+All FORMULA, over a selectable month range (R5-R6). Sources (R8-R11): external funding and revenues. Uses (R14-R23): the expense categories from the Forecast plus working capital as the balancing item. Each line is shown in dollars and as a percent of the total.
 <!-- HEMROCK_SHEET_MAP_END -->

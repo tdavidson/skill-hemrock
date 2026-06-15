@@ -54,12 +54,12 @@ CRITICAL RULES:
 <!-- HEMROCK_SHEET_MAP_START -->
 ## Sheet Reference (auto-generated, do not edit by hand — see _models/)
 
-# Fund Economics Tool — Sheet Map
+# Fund Economics Tool Sheet Map
 
 ## Sheets (8)
 README, License, Forecast, Forecast_1, Forecast_2, Scenarios, Glossary, Changelog
 
-## Forecast (B1:K62) — Main Input & Output Sheet
+## Forecast (B1:K62): Main Input and Output Sheet
 
 ### Capital and Fund Assumptions (R5-R19)
 | Row | Label | Type | Default |
@@ -84,7 +84,7 @@ README, License, Forecast, Forecast_1, Forecast_2, Scenarios, Glossary, Changelo
 | R27/D27-E27 | Average Check Size | INPUT ($) | $750k / $0 |
 | R28/D28-E28 | # of Checks | FORMULA | 28.6 / 0 |
 
-### Return Assumptions (R31-R39) — POWER LAW TIERS
+### Return Assumptions (R31-R39): Power Law Tiers
 | Row | Type | % of Capital | # Investments | Avg Gross Multiple | Holding Period |
 |-----|------|-------------|---------------|-------------------|----------------|
 | R35 | Writeoff | INPUT 60% | FORMULA | 0x | INPUT 2yr |
@@ -93,7 +93,7 @@ README, License, Forecast, Forecast_1, Forecast_2, Scenarios, Glossary, Changelo
 | R38 | Large | INPUT 10% | FORMULA | INPUT 32x | INPUT 6yr |
 | R39 | Totals | FORMULA | FORMULA | FORMULA 4x | FORMULA |
 
-### Fund Performance (R41-R60) — ALL FORMULA
+### Fund Performance (R41-R60): all FORMULA
 | Row | Metric | Total | LP | GP |
 |-----|--------|-------|----|----|
 | R44 | Called Capital (Paid-in) | $25M | $24.5M | $500k |
@@ -110,12 +110,12 @@ README, License, Forecast, Forecast_1, Forecast_2, Scenarios, Glossary, Changelo
 | R56 | Net IRR | 25.0% | 21.6% | 81.5% |
 | R58-R60 | PIC, DPI, RVPI | 1.0 / 3.43 / 0 | | |
 
-## Forecast_1 & Forecast_2 — Scenario Sheets
+## Forecast_1 and Forecast_2: Scenario Sheets
 Identical structure to Forecast. Used for conservative and high cases.
 - Assumptions are INPUT (can differ from base)
 - Linked to Scenarios sheet for comparison
 
-## Scenarios (B2:N32) — Comparison Output
+## Scenarios (B2:N32): Comparison Output
 - Shows Conservative, Base, High side by side
 - R22-R25: Gross/Net Multiple, Gross/Net IRR for each
 - R27-R28: Two sensitivity inputs (% change in # of high exits, % change in valuations)
@@ -123,7 +123,7 @@ Identical structure to Forecast. Used for conservative and high cases.
 
 ## Key characteristics
 - No quarterly cash flows (unlike full VC Model)
-- No time-series — everything is aggregate over fund life
+- No time-series; everything is aggregate over fund life
 - Three scenarios built in via duplicate sheets
-- Power-law return tiers (zeros/small/medium/large) — not a single average multiple
+- Power-law return tiers (zeros/small/medium/large), not a single average multiple
 <!-- HEMROCK_SHEET_MAP_END -->

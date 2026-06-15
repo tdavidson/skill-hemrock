@@ -57,12 +57,12 @@ CRITICAL RULES:
 <!-- HEMROCK_SHEET_MAP_START -->
 ## Sheet Reference (auto-generated, do not edit by hand — see _models/)
 
-# Unit Economics Tool — Sheet Map
+# Unit Economics Tool Sheet Map
 
 ## Sheets (7)
 README, License, Disclaimer, Unit Economics, Model Comparison, Additional Tools, Changelog
 
-## Unit Economics (B1:BA1001) — Single sheet, all-in-one
+## Unit Economics (B1:BA1001): Single sheet, all-in-one
 
 ### Inputs (R5-R47)
 | Row | Label | Type | Default |
@@ -117,7 +117,7 @@ README, License, Disclaimer, Unit Economics, Model Comparison, Additional Tools,
 
 ## Key characteristics
 - Self-contained single sheet (no cross-sheet references)
-- No time-series forecast — purely per-unit economics
+- No time-series forecast; purely per-unit economics
 - Three revenue types modeled independently: Recurring, One-time, Transaction
 - Payback calculated on contribution margin, not revenue
 <!-- HEMROCK_SHEET_MAP_END -->

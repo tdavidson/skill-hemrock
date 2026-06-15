@@ -59,7 +59,7 @@ CRITICAL RULES:
 <!-- HEMROCK_SHEET_MAP_START -->
 ## Sheet Reference (auto-generated, do not edit by hand — see _models/)
 
-# Ecommerce Forecasting Tool — Sheet Map
+# Ecommerce Forecasting Tool Sheet Map
 
 ## Sheets (9)
 README, License, Disclaimer, Get Started, Key Reports, Forecast, Historicals, Model Comparison, Changelog
@@ -105,8 +105,8 @@ README, License, Disclaimer, Get Started, Key Reports, Forecast, Historicals, Mo
 | R47/D47 | After N total customers adjust | INPUT (#) | 0 |
 | R48/D48 | Change cohort performance by | INPUT (#) | 1 |
 
-## Forecast (B1:BO199) — Cohort-based
-### Assumptions (R15-R48): Mirrors Get Started — FORMULA
+## Forecast (B1:BO199): Cohort-based
+### Assumptions (R15-R48): mirrors Get Started, all formulas
 ### Retention Curve (R44):
 - Calculated from churn rate and repeat cycle
 - Can be overwritten with manual retention curve
@@ -115,7 +115,7 @@ README, License, Disclaimer, Get Started, Key Reports, Forecast, Historicals, Mo
 - R51: Website Traffic (FORMULA from orders ÷ conversion)
 - R52: New Customers per period (FORMULA)
 - R54: Total Orders (FORMULA: sum of all cohorts)
-- R55-R100+: Individual monthly cohorts — each row is a cohort, columns track orders per period (FORMULA based on retention curve)
+- R55-R100+: Individual monthly cohorts. Each row is a cohort; columns track orders per period (FORMULA based on retention curve)
 ### Revenue (R103+):
 - Orders × AOV per cohort
 - Separated into new vs repeat revenue
@@ -124,7 +124,7 @@ README, License, Disclaimer, Get Started, Key Reports, Forecast, Historicals, Mo
 - CAC, LTV, payback period
 - Contribution margin
 
-## Historicals (B1:BO66) — Optional INPUT
+## Historicals (B1:BO66): Optional INPUT
 - Monthly cohort data for historical performance
 - Users enter actual order counts per cohort
 - Model blends historical retention with forecast assumptions

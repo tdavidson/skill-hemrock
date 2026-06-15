@@ -76,16 +76,16 @@ CRITICAL RULES:
 <!-- HEMROCK_SHEET_MAP_START -->
 ## Sheet Reference (auto-generated, do not edit by hand — see _models/)
 
-# Venture Valuation Tool — Sheet Map
+# Venture Valuation Tool Sheet Map
 
 ## Sheets (7)
 README, License, Venture Valuation, Simple Venture Valuation, Resources, Model Comparison, Changelog
 
-The workbook is dual-mode. The full **Venture Valuation** sheet models one average investment carried through 7 rounds (Seed → Series F+ → Exit), with graduation rates, full waterfall, and expected value. The **Simple Venture Valuation** sheet collapses all of that into a single-page, breakpoint-style evaluator for one specific investment. Use one or the other — they are independent.
+The workbook is dual-mode. The full **Venture Valuation** sheet models one average investment carried through 7 rounds (Seed → Series F+ → Exit), with graduation rates, full waterfall, and expected value. The **Simple Venture Valuation** sheet collapses all of that into a single-page, breakpoint-style evaluator for one specific investment. Use one or the other; they are independent.
 
-Both sheets assume nonparticipating preferred, 1x liquidation preferences, and reverse-chronological seniority (latest round senior). They also rely on **iterative calculations** (circular references) to resolve option pool sizing — Excel/Sheets must have iterative calc enabled.
+Both sheets assume nonparticipating preferred, 1x liquidation preferences, and reverse-chronological seniority (latest round senior). They also rely on **iterative calculations** (circular references) to resolve option pool sizing, so Excel/Sheets must have iterative calc enabled.
 
-## Venture Valuation (B1:M165) — Full Per-Investment Model
+## Venture Valuation (B1:M165): Full Per-Investment Model
 
 Single working sheet. Columns **D–J** are the 7 round stages (D=Seed, E=Series A, F=Series B, G=Series C, H=Series D, I=Series E, J=Series F+). Column **C** is "Before Seed." Column **K** is totals or "Exit." Column **M** is notes only. Row 5 is the round header row.
 
@@ -104,8 +104,8 @@ Two parallel blocks for the **modeled Investor** (R10-R20) and **All other Prefe
 | R18 | Valuation Cap ($) | INPUT | 0 |
 | R19 | Share Price | FORMULA | YC post-money treatment |
 | R20 | Shares | FORMULA | amount / share price |
-| R23-R27 | All Other Preferred — pre-money SAFEs/Notes block | INPUT + FORMULA | mirror of R11-R15 |
-| R28-R32 | All Other Preferred — post-money SAFEs block | INPUT + FORMULA | mirror of R16-R20 |
+| R23-R27 | All Other Preferred, pre-money SAFEs/Notes block | INPUT + FORMULA | mirror of R11-R15 |
+| R28-R32 | All Other Preferred, post-money SAFEs block | INPUT + FORMULA | mirror of R16-R20 |
 
 The conversion math assumes investor-friendly conversion: share price is the minimum of equity price, cap-based price, and discount-based price. Comment on R11 explicitly says "assuming investor friendly conversion by default; feel free to edit for different conversion methods."
 
@@ -115,14 +115,14 @@ The conversion math assumes investor-friendly conversion: share price is the min
 | R35 | Convertibles converting in round | FORMULA | D11+D16 (and R23+R28 for others) |
 | R36 | Investor, new Preferred Equity ($) | INPUT | 0 at most rounds; E36 is a circular formula `=D47*E38` seeded to maintain pro-rata at Series A |
 | R37 | All other Preferred, new equity | FORMULA | R38 - R36 |
-| R38 | Total Investment Round | FORMULA (INPUT-colored) | `=0.2*R40/(1-0.2)` — assumes 20% sold per round by default; edit to change |
+| R38 | Total Investment Round | FORMULA (INPUT-colored) | `=0.2*R40/(1-0.2)`, assumes 20% sold per round by default; edit to change |
 | R39 | Option Pool, as % of postmoney cap | INPUT (%) | 20%, 10%, 10%, 5%, 5%, 5%, 5% |
 | R40 | Premoney Valuation ($) | INPUT at D40; FORMULAS at E40-J40 | $8M → ×3 → ×3 → ×3 → ×2 → ×1.75 → ×1.5 |
 | R41 | Postmoney Valuation | FORMULA | R40 + R38 |
 | R42 | % of Company Sold in each round | FORMULA | R38 / R41 |
 | R43 | # Shares issued to Investor in round | FORMULA | R53 − prior R53 |
 | R44 | # Shares issued to all investors in round | FORMULA | (R53 + R54) − prior |
-| R45 | Share Price | FORMULA | `(R40 − R41×R39) / fully-diluted denom` — uses option pool + convertibles + prior shares |
+| R45 | Share Price | FORMULA | `(R40 − R41×R39) / fully-diluted denom`, uses option pool + convertibles + prior shares |
 | R46 | Blended Share Price, incl. Convertibles | FORMULA | total dollars / total new shares |
 | R47 | Ownership %, Investor | FORMULA | R53 / R57 |
 | R48 | Ownership %, all other Preferred | FORMULA | R54 / R57 |
@@ -130,7 +130,7 @@ The conversion math assumes investor-friendly conversion: share price is the min
 
 Row 38 is INPUT-styled (blue on grey) but shipped as a formula. The default makes total round size = 25% of premoney, giving 20% post-money ownership. Overwrite it with a raw dollar amount to set a specific round size.
 
-Row 40 is the key valuation input — only D40 is a raw value; E40-J40 are formulas that chain valuation multipliers (3x, 3x, 3x, 2x, 1.75x, 1.5x). Edit each cell to set an explicit future valuation.
+Row 40 is the key valuation input. Only D40 is a raw value; E40-J40 are formulas that chain valuation multipliers (3x, 3x, 3x, 2x, 1.75x, 1.5x). Edit each cell to set an explicit future valuation.
 
 ### Proforma Cap Table (R51-R57)
 Standard running cap table.
@@ -141,10 +141,10 @@ Standard running cap table.
 | R53 | Investor shares (cumulative) | FORMULA | new round shares + converted SAFEs + prior |
 | R54 | All other Preferred shares (cumulative) | FORMULA | same structure |
 | R55 | Options and RSUs Available | FORMULA | prior row + prior-round new options |
-| R56 | Options, New in Round | FORMULA | `=max(0, sum(R52:R55)*R39/(1-R39))` — **circular reference**, requires iterative calc |
+| R56 | Options, New in Round | FORMULA | `=max(0, sum(R52:R55)*R39/(1-R39))`, a **circular reference** that requires iterative calc |
 | R57 | Fully-Diluted Shares, after Round | FORMULA | sum(R52:R56) |
 
-C52, C53, C54, C55, C56 are INPUT cells on the "Before Seed" column — use these to seed a non-empty starting cap table. Default is 10M common and everything else zero.
+C52, C53, C54, C55, C56 are INPUT cells on the "Before Seed" column. Use these to seed a non-empty starting cap table. Default is 10M common and everything else zero.
 
 ### Graduation Rates and Exits (R59-R68)
 The portfolio-level assumption layer. For one average investment, what fraction raises the next round, exits now, or fails.
@@ -160,7 +160,7 @@ The portfolio-level assumption layer. For one average investment, what fraction 
 
 K67 + K68 = 1. Default distribution: ~70% eventually fail, ~30% eventually exit.
 
-### Proceeds and Returns (R70-R134) — Waterfall Engine
+### Proceeds and Returns (R70-R134): Waterfall Engine
 For each hypothetical exit stage (column = round after which exit occurs), the model runs a nonparticipating-preferred waterfall.
 
 | Row | Label | Type | Default |
@@ -175,7 +175,7 @@ For each hypothetical exit stage (column = round after which exit occurs), the m
 | R123 | Check (total proceeds = total exit) | FORMULA | should equal 0 |
 | R125-R134 | Proceeds per Share block | FORMULA | per share class |
 
-R72 is the primary input — override to model different exit multiples per round. R73 is formula but INPUT-colored; raw dollar exit values can be typed directly.
+R72 is the primary input; override to model different exit multiples per round. R73 is formula but INPUT-colored; raw dollar exit values can be typed directly.
 
 The waterfall assumes 1x non-participating preferred, latest round senior (reverse chronological), and common + options pari passu. No participating preferred, no caps, no anti-dilution. Each per-class row (R77-R83, R101-R107) uses `if(preference > pro-rata share, take preference, convert)` logic.
 
@@ -196,7 +196,7 @@ Ties it all together for the modeled Investor.
 
 K156-K162 is the money number: total expected value per $1 invested at each entry round. Default model shows K156 = ~3.08x EV for Seed entry, declining to ~1.25x at Series F+.
 
-## Simple Venture Valuation (A1:AB46) — Single-Page Evaluator
+## Simple Venture Valuation (A1:AB46): Single-Page Evaluator
 
 A deliberate shortcut. No round-by-round cap table, no graduation chains. One investment, one Exit column per breakpoint (D-H = 5 exit scenarios), one probability row.
 
@@ -218,7 +218,7 @@ A deliberate shortcut. No round-by-round cap table, no graduation chains. One in
 | R22/D22 | Dilution from Additional Option Pools | INPUT (%) | 20% |
 | R23/D23 | Ownership %, post-all investment | FORMULA | D20 + (1−D21) × D15 × (1−D22) |
 
-R20-R22 are explicit shortcuts — instead of modeling each follow-on round, you specify total dilution from others and from options. The comment on R20 says: "intentional shortcut, to not need to model each individual investment round."
+R20-R22 are explicit shortcuts. Instead of modeling each follow-on round, you specify total dilution from others and from options. The comment on R20 says: "intentional shortcut, to not need to model each individual investment round."
 
 ### Exit Breakpoints (R25-R32)
 Columns D-H are 5 exit price breakpoints built automatically from the liquidation preference stack.
@@ -251,7 +251,7 @@ Reference links to other Foresight/Hemrock VC models and third-party resources (
 Feature matrix comparing this tool against the rest of the Foresight/Hemrock VC template lineup. Columns = features (Portfolio Forecast, Fund Performance Metrics, Individual Investment Evaluation, etc.). For this tool (R17), only **Individual Investment Evaluation** is true. Informational. Safe to hide.
 
 ## Changelog (B1:D11)
-4 entries. v1.0.0 (2023-02-08) → v1.1.2 (2024-03-29). Notable: v1.1.1 added the Simple Venture Valuation sheet; v1.1.2 refined its liquidation preferences and breakpoints. Version history — keep hidden, not deleted.
+4 entries. v1.0.0 (2023-02-08) → v1.1.2 (2024-03-29). Notable: v1.1.1 added the Simple Venture Valuation sheet; v1.1.2 refined its liquidation preferences and breakpoints. Version history; keep hidden, not deleted.
 
 ## Key characteristics
 - **Dual-mode**: full round-chain model on Venture Valuation, single-page breakpoint evaluator on Simple Venture Valuation. Pick one.
@@ -263,5 +263,5 @@ Feature matrix comparing this tool against the rest of the Foresight/Hemrock VC 
 
 ## Notes
 - Row 38 (`Total Investment Round`) on the full sheet is formula-driven from Premoney (R40) with a hard-coded 20%/80% split. Users wanting a specific $ round size must overwrite the formula. Consider flagging in primer.
-- Simple Venture Valuation R39 uses `xirr(D42:D44, E42:E44)` — if the user adds more follow-on investments, the XIRR range does not auto-expand. The note on R39 flags this.
+- Simple Venture Valuation R39 uses `xirr(D42:D44, E42:E44)`; if the user adds more follow-on investments, the XIRR range does not auto-expand. The note on R39 flags this.
 <!-- HEMROCK_SHEET_MAP_END -->
