@@ -4,7 +4,7 @@
 
 ### Explain the tool structure
 
-Walk me through the Fund Economics Tool. What does each tab do (Outputs, Fund Structure, Portfolio Construction, Expenses, Scenarios, Monte Carlo), and what order should I work through them to set up my fund?
+Walk me through the Fund Economics Tool surface I am currently using. Describe only tabs and features visible to me; do not assume Monte Carlo, advanced scenarios, or other unreleased modules are available.
 
 ### When to use this vs. the full VC Model
 
@@ -32,7 +32,7 @@ Walk me through what the Scenarios tab is showing. The Base column pulls from my
 
 ### Interpret the Monte Carlo output
 
-On the Monte Carlo tab, walk me through what the p5/p50/p95 bands mean for each metric. In particular: what does the loss-of-capital probability represent, and how much should I trust it at [X] iterations with σ = [Y]? Flag any distribution that looks suspicious.
+Only if Monte Carlo is currently visible in my account, explain its displayed percentiles and loss-of-capital output using the methodology shown in the product. Otherwise, do not claim that this advanced feature is available.
 
 ### Stress-test fees on net returns
 

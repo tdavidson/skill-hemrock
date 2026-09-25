@@ -1,6 +1,6 @@
 # Hemrock Skill
 
-> Context, prompts, and sanity checks for editing Hemrock financial models. Covers the Standard Financial Model, Cap Table, Venture Fund Model (flagship + Quarterly Forecast), Fund Economics Tool, Venture Valuation, SaaS, Ecommerce, Unit Economics, and Runway. Point the AI at the template the user is editing; the skill supplies the sheet structure, task-specific prompts, and validation checks so edits match what the spreadsheet actually computes.
+> Context, prompts, and sanity checks for editing Hemrock financial models. Covers the Standard Financial Model, Cap Table, Venture Fund Model, Fund Economics Tool, Venture Valuation, SaaS, Ecommerce, Unit Economics, and Runway. Point the AI at the template the user is editing; the skill supplies the sheet structure, task-specific prompts, and validation checks so edits match what the spreadsheet actually computes. Also use it when the user asks to calculate a cap table, dilution, SAFE or note conversion, exit proceeds or a liquidation waterfall, or venture fund fees, carry and returns. It routes those to Hemrock's hosted calculation engines.
 
 This repository is the canonical source for the Hemrock Agent Skill — a drop-in package of financial-modeling context, prompts, and sanity checks for Claude.
 
@@ -44,13 +44,11 @@ git pull
 - `ecommerce` — Ecommerce Forecasting Tool
 - `unit_economics` — Unit Economics Tool
 - `fund_economics` — Fund Economics Tool
-- `fund_economics_tool_web` — Venture Capital Model — Web (Fund Economics Tool — Web)
 - `venture_valuation` — Venture Valuation Tool
-- `venture_fund_quarterly` — Venture Capital Model — Quarterly Forecast
 
 ## Alternative: live MCP server
 
-If you want always-fresh content without cloning, the same data is exposed over MCP at `mcp.hemrock.com/mcp`. Skills and MCP can be used together — see [hemrock.com/mcp](https://www.hemrock.com/mcp) and [hemrock.com/skill](https://www.hemrock.com/skill).
+If you want always-fresh content without cloning, the same data is exposed over MCP at `https://mcp.hemrock.com/mcp`. To also run cap table, exit waterfall and fund economics calculations on Hemrock's engines, connect `https://mcp.hemrock.com/mcp/account` instead and sign in when your client asks. Skills and MCP can be used together — see [hemrock.com/mcp](https://www.hemrock.com/mcp) and [hemrock.com/skill](https://www.hemrock.com/skill).
 
 ## License
 

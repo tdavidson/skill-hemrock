@@ -27,7 +27,7 @@ The Scenarios tab only changes the large-exit tier's multiple and its share of i
 
 ## Validate Monte Carlo assumptions
 
-For the Monte Carlo run: (1) per-investment tier is drawn from the tier weights on Return Expectations; (2) each investment's multiple is lognormal around the tier's stated multiple with σ = [value]; (3) fees, structure, carry, stages stay fixed. Confirm that matches what I see, and flag if σ or iteration count seems off for the output variance I'm getting.
+Only review Monte Carlo assumptions if that feature and its methodology are currently visible in my account. Use the displayed assumptions as the source of truth and do not claim an unreleased simulation method.
 
 ## Validate waterfall structure (simple carry, no pref)
 
